@@ -11,10 +11,15 @@
 # https://docs.opencv.org/4.x/d9/d61/tutorial_py_morphological_ops.html
 # maybe what I can do is cut out a part, edit it, and put it back onto the frame
 # https://www.geeksforgeeks.org/line-detection-python-opencv-houghline-method/
+# https://docs.opencv.org/3.4/d9/db0/tutorial_hough_lines.html
 
 # import required libraries
 import cv2
 import numpy as num
+import math
+from reader import rectangle, crop
+from optimization import optimize
+from lineDraw import drawing
 
 video = cv2.VideoCapture(0)
 
@@ -29,31 +34,24 @@ while True:
     booleanReady, frame = video.read()
 
     grey = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    blurred = cv2.GaussianBlur(grey, (1, 1), 0)
-    # canny = cv2.Canny(blurred, 100, 200)
+
+    optimized = optimize(grey)
+    rectangled = rectangle(frame)
+    cropped = crop(optimized)
+
+    lines = cv2.HoughLines(cropped, 1, num.pi/180, 150)
+
+    final = drawing(lines, optimized)
 
     # https://www.geeksforgeeks.org/filter-color-with-opencv/
-    ranged = cv2.inRange(blurred, 0, 115)
-    result = cv2.bitwise_and(blurred, blurred, mask=ranged)
+    # ranged = cv2.inRange(blurred, 0, 115)
+    # result = cv2.bitwise_and(blurred, blurred, mask=ranged)
 
     # edges = cv2.Canny(result, 50, 150, apertureSize=3)
-    #
-    # lines = cv2.HoughLines(edges, 1, num.pi / 180, 200)
 
-    # https://www.geeksforgeeks.org/removing-black-background-and-make-transparent-using-python-opencv/
-    # https://www.tutorialspoint.com/removing-black-background-and-make-transparent-using-opencv-python
-    # make black transparent
-    # then make the lines black
-    # make exclusion rectangle
+    # https://learnopencv.com/cropping-an-image-using-opencv/
 
-    # https://www.tutorialspoint.com/how-to-mask-an-image-in-opencv-python
-
-    # cut = num.zeros(result.shape[:2], num.uint8)
-    # cut[100:250, 150:450] = 0
-    #
-    # cutOut = cv2.bitwise_and(result, result, mask=cut)
-
-    cv2.imshow('Frame', result)
+    cv2.imshow('Frame', final)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
