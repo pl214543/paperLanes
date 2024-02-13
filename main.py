@@ -11,17 +11,15 @@ from lineDraw import drawing
 # video capture
 video = cv2.VideoCapture(0)
 
+print(video.isOpened())
+
 # check if the video is opened
-def checkVideo(video):
-    if video.isOpened() == False:
-        return True
-    else:
-        return False
 
-booleanCheck = checkVideo(video)
-
-while booleanCheck == True:
+while video.isOpened == True:
     booleanReady, frame = video.read()
+
+    print(booleanReady)
+    print(frame)
 
     # grayscale
     grey = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
