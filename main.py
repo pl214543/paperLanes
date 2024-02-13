@@ -13,12 +13,14 @@ video = cv2.VideoCapture(0)
 
 # check if the video is opened
 def checkVideo(video):
-    if video.isOpened():
-        print("Video will not open.")
+    if video.isOpened() == False:
+        return True
+    else:
+        return False
 
-checkVideo(video)
+booleanCheck = checkVideo(video)
 
-while True:
+while booleanCheck == True:
     booleanReady, frame = video.read()
 
     # grayscale
@@ -31,6 +33,8 @@ while True:
 
     # detect the lines
     lines = cv2.HoughLines(cropped, 1, num.pi/180, 200)
+
+    print(lines)
 
     # draw the final lines
     final = drawing(optimized, lines)
