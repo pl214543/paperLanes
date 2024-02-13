@@ -33,7 +33,7 @@ while True:
     lines = cv2.HoughLines(cropped, 1, num.pi/180, 200)
 
     # draw the final lines
-    final = drawing(lines, optimized)
+    final = drawing(optimized, lines)
 
     cv2.imshow('Frame', final)
 
