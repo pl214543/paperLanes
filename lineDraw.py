@@ -22,34 +22,48 @@ def drawing(frame, lines):
             for parLines in parallels:
                 print(parLines)
                 for line in parLines:
-                    print(line[0][0])
+
+                    print(averageStartX)
                     averageStartX += line[0][0]
+                    print(averageEndX)
                     averageEndX += line[0][2]
+                    print(averageStartY)
                     averageStartY += line[0][1]
+                    print(averageEndY)
                     averageEndY += line[0][3]
 
-                averageStartX = averageStartX.item()
-                averageEndX = averageEndX.item()
-                averageStartY = averageStartY.item()
-                averageEndY = averageEndY.item()
+                    averageStartX = averageStartX.item()
+                    print(averageStartX)
+                    averageEndX = averageEndX.item()
+                    print(averageEndX)
+                    averageStartY = averageStartY.item()
+                    print(averageStartY)
+                    averageEndY = averageEndY.item()
+                    print(averageEndY)
 
-                averageStartX = averageStartX / 2
-                averageEndX = averageEndX / 2
-                averageStartY = averageStartY / 2
-                averageEndY = averageEndY / 2
+                    print(averageStartX)
+                    averageStartX = averageStartX / 2
+                    print(averageEndX)
+                    averageEndX = averageEndX / 2
+                    print(averageStartY)
+                    averageStartY = averageStartY / 2
+                    print(averageEndY)
+                    averageEndY = averageEndY / 2
 
-                averageStartX = int(averageStartX)
-                averageEndX = int(averageEndX)
-                averageStartY = int(averageStartY)
-                averageEndY = int(averageEndY)
+                    print(averageStartX)
+                    averageStartX = int(averageStartX)
+                    print(averageEndX)
+                    averageEndX = int(averageEndX)
+                    print(averageStartY)
+                    averageStartY = int(averageStartY)
+                    print(averageEndY)
+                    averageEndY = int(averageEndY)
 
-                cv2.line(frame, (averageStartX, averageStartY), (averageEndX, averageEndY), (0, 255, 0), 2)
+            cv2.line(frame, (averageStartX, averageStartY), (averageEndX, averageEndY), (0, 255, 0), 2)
 
         for parLines in parallels:
             for line in parLines:
                 x1, y1, x2, y2 = line[0]
-                cv2.line(frame, (x1, y1), (x2, y2), (0, 255, 0), 3)
+                cv2.line(frame, (x1, y1), (x2, y2), (0, 0, 255), 3)
 
     return frame
-
-    # cv2.line(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
