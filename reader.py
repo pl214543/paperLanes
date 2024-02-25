@@ -2,46 +2,23 @@
 import cv2
 import numpy as num
 
-def rectangle(frame):
+# rectangle function for drawing the rectangle around the mask
+def rectangle(frame, varList):
 
-    # gets height and width of video
-    height, width = frame.shape[:2]
+    # draws rectangle on the frame so that the user knows where the mask is
+    addRectangle = cv2.rectangle(frame, (varList[0], varList[1]), (varList[2], varList[3]), 255, 3)
 
-    # sets up required parameters for drawing rectangle
-    topleftx = width * 0.175
-    topleftx = int(topleftx)
-    toplefty = height * 0.725
-    toplefty = int(toplefty)
-    bottomrightx = width * 0.85
-    bottomrightx = int(bottomrightx)
-    bottomrighty = height * 0.25
-    bottomrighty = int(bottomrighty)
+    # returns addRectangle variable
+    return addRectangle
 
-    # draws rectangle
-    rectangled = cv2.rectangle(frame, (topleftx, toplefty), (bottomrightx, bottomrighty), 255, 3)
-
-    return rectangled
-
-def crop(frame):
-
-    # gets height and width of video
-    height, width = frame.shape[:2]
-
-    # sets up required parameters for drawing rectangles
-    topleftx = width * 0.175
-    topleftx = int(topleftx)
-    toplefty = height * 0.725
-    toplefty = int(toplefty)
-    bottomrightx = width * 0.85
-    bottomrightx = int(bottomrightx)
-    bottomrighty = height * 0.25
-    bottomrighty = int(bottomrighty)
+# crop function for employing the mask so that contours and lines are only detected within a defined space
+def crop(frame, zerosRectangle, varList):
 
     # creates a mask for cropping out outer edges
-    mask = num.zeros(frame.shape[:2], num.uint8)
-    mask[toplefty:bottomrighty, topleftx:bottomrightx] = 255
+    mask = cv2.rectangle(zerosRectangle, (varList[0], varList[1]), (varList[2], varList[3]), 255, -1)
 
     # crops using the mask
-    cropped = cv2.bitwise_and(frame, frame, mask)
+    cropped = cv2.bitwise_and(frame, mask)
 
+    # returns the masked image for detection
     return cropped
