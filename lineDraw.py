@@ -18,7 +18,7 @@ def drawing(frame, lines):
 
         if len(parallels) != 0:
             for parLines in parallels:
-                for line in lines:
+                for line in parLines:
                     averageStartX += line[0][0]
                     averageEndX += line[0][2]
                     averageStartY += line[0][1]
