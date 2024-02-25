@@ -10,7 +10,7 @@ from optimization import optimize
 from lineDraw import drawing
 
 # video capture
-video = cv2.VideoCapture(1)
+video = cv2.VideoCapture(0)
 
 # test case
 print(video.isOpened())
@@ -47,12 +47,12 @@ while video.isOpened():
     cropped = crop(optimized, zerosRectangle, varList)
 
     # detect the lines using HoughLines
-    lines = cv2.HoughLinesP(cropped, 1, num.pi/180, 50, None, 50, 10)
+    lines = cv2.HoughLinesP(cropped, 0.5, num.pi/180, 15, None, 40, 500)
 
     # draw the final lines
     final = drawing(frame, lines)
 
-    # addRectangle will draw the rectangle around the mask. put after others so contours doesn't detect the rectangle
+    # addRectangle will draw the rectangle around the mask
     addRectangle = rectangle(final, varList)
 
     # display the frame, creating a video
