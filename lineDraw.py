@@ -1,34 +1,55 @@
 # import required libraries
 import cv2
 import numpy as num
+from parallelCheck import findParallels
 
+# function for drawing the straight lines
 def drawing(frame, lines):
-    for r_theta in lines:
-        arr = num.array(r_theta[0], dtype=num.float64)
-        r, theta = arr
-        # Stores the value of cos(theta) in a
-        a = num.cos(theta)
 
-        # b stores the value of sin(theta) in b
-        b = num.sin(theta)
+    averageStartX = 0
+    averageStartY = 0
+    averageEndX = 0
+    averageEndY = 0
 
-        # x0 stores the value rcos(theta)
-        x0 = a * r
+    # checks if anything is in the list of lines (do any lines exist) so no errors appear
+    if lines is not None:
 
-        # y0 stores the value rsin(theta)
-        y0 = b * r
+        parallels = findParallels(lines, frame)
 
-        # x1 variable for the final line
-        x1 = int(x0 + 1000 * (-b))
+        if len(parallels) != 0:
+            for parLines in parallels:
+                for line in lines:
+                    averageStartX += line[0][0]
+                    averageEndX += line[0][2]
+                    averageStartY += line[0][1]
+                    averageEndY += line[0][3]
 
-        # y1 variable for the final line
-        y1 = int(y0 + 1000 * (a))
+            averageStartX = averageStartX.item()
+            averageEndX = averageEndX.item()
+            averageStartY = averageStartY.item()
+            averageEndY = averageEndY.item()
 
-        # x2 variable for the final line
-        x2 = int(x0 - 1000 * (-b))
+            averageStartX = averageStartX / int(len(parallels))
+            averageEndX = averageEndX / int(len(parallels))
+            averageStartY = averageStartY / int(len(parallels))
+            averageEndY = averageEndY / int(len(parallels))
 
-        # y2 variable for the final line
-        y2 = int(y0 - 1000 * (a))
+            averageStartX = int(averageStartX)
+            averageEndX = int(averageEndX)
+            averageStartY = int(averageStartY)
+            averageEndY = int(averageEndY)
 
-        # cv2.line draws a line on the frame
-        cv2.line(frame, (x1, y1), (x2, y2), (0, 0, 255), 2)
+            print("\n\n\n\n\n" + str(averageStartX) + "\n\n\n\n\n")
+
+            cv2.line(frame, (averageStartX, averageStartY), (averageEndX, averageEndY), (0, 255, 0), 2)
+
+        for parLines in parallels:
+            pass
+
+    return frame
+
+    # cv2.line(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+
+
+    # returns the frame with lines drawn
+    return frame
