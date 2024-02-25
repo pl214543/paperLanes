@@ -6,6 +6,7 @@ from parallelCheck import findParallels
 # function for drawing the straight lines
 def drawing(frame, lines):
 
+    # sets up the variables for drawing mid line
     averageStartX = 0
     averageStartY = 0
     averageEndX = 0
@@ -14,56 +15,51 @@ def drawing(frame, lines):
     # checks if anything is in the list of lines (do any lines exist) so no errors appear
     if lines is not None:
 
-        parallels = findParallels(lines)
+        # gets all parallel lines
+        parallels, nonparallels = findParallels(lines)
 
-        print(parallels)
-
+        # checks to make sure that parallels are at least detected
         if len(parallels) != 0:
+            
+            # iterates through
             for parLines in parallels:
-                print(parLines)
+                
+                # iterates through
                 for line in parLines:
 
-                    print(averageStartX)
+                    # adds x and y to the average storer
                     averageStartX += line[0][0]
-                    print(averageEndX)
                     averageEndX += line[0][2]
-                    print(averageStartY)
                     averageStartY += line[0][1]
-                    print(averageEndY)
                     averageEndY += line[0][3]
 
-                    averageStartX = averageStartX.item()
-                    print(averageStartX)
-                    averageEndX = averageEndX.item()
-                    print(averageEndX)
-                    averageStartY = averageStartY.item()
-                    print(averageStartY)
-                    averageEndY = averageEndY.item()
-                    print(averageEndY)
-
-                    print(averageStartX)
+                    # gets the average
                     averageStartX = averageStartX / 2
-                    print(averageEndX)
                     averageEndX = averageEndX / 2
-                    print(averageStartY)
                     averageStartY = averageStartY / 2
-                    print(averageEndY)
                     averageEndY = averageEndY / 2
 
-                    print(averageStartX)
                     averageStartX = int(averageStartX)
-                    print(averageEndX)
                     averageEndX = int(averageEndX)
-                    print(averageStartY)
                     averageStartY = int(averageStartY)
-                    print(averageEndY)
                     averageEndY = int(averageEndY)
 
-            cv2.line(frame, (averageStartX, averageStartY), (averageEndX, averageEndY), (0, 255, 0), 2)
-
+        # iterates through parallels
         for parLines in parallels:
             for line in parLines:
+                
+                #unpacks 
+                x1, y1, x2, y2 = line[0]
+                
+                # draws lines
+                cv2.line(frame, (x1, y1), (x2, y2), (0, 0, 255), 3)
+                cv2.line(frame, (averageStartX, averageStartY), (averageEndX, averageEndY), (0, 255, 0), 2)
+
+        # draws nonparallels - MAY REMOVE
+        for nonParLines in nonparallels:
+            for line in nonParLines:
                 x1, y1, x2, y2 = line[0]
                 cv2.line(frame, (x1, y1), (x2, y2), (0, 0, 255), 3)
 
+    # return frame
     return frame
