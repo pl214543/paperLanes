@@ -6,3 +6,4 @@ https://www.geeksforgeeks.org/line-detection-python-opencv-houghline-method/ - p
 https://docs.opencv.org/3.4/d9/db0/tutorial_hough_lines.html - Also for HoughLines
 https://www.tutorialspoint.com/how-to-mask-an-image-in-opencv-python - masking video
 https://www.geeksforgeeks.org/line-detection-python-opencv-houghline-method/ - more houghlines
+https://stackoverflow.com/questions/15780210/python-opencv-detect-parallel-lines - Stack Overflow Detect Parallel Lines
