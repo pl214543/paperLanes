@@ -75,6 +75,7 @@ def findParallels(lines):
     nonparallels = []
 
     # iterates through the lines
+    # Stack Overflow Detect Parallel Lines (Read Me)
     for i in range(len(lines)):
         for j in range(len(lines)):
             if i == j: continue
